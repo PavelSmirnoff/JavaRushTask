@@ -5,6 +5,7 @@ target/
 .idea/
 .idea
 .repository/
+.DS_Store
 
 #*.iml
 #*.iws
