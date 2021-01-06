@@ -1,0 +1,9 @@
+taskKey="com.javarush.task.pro.task12.task1214"\n\nОстанется только Java
+
+В методе main удали ненужные языки программирования (все, кроме Java) из списка programmingLanguages. Не забудь удалить JavaScript.
+
+
+Требования:
+1.	В методе main должны удаляться все строки из списка programmingLanguages, кроме &quot;Java&quot;.
+
+
