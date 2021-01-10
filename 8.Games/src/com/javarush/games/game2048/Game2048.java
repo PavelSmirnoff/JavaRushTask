@@ -5,6 +5,7 @@ import com.javarush.engine.cell.*;
 public class Game2048 extends Game {
     private static final int SIDE = 4;
     private int[][] gameField = new int[SIDE][SIDE];
+    private boolean isGameStopped = false;
 
     @Override
     public void initialize() {
@@ -14,11 +15,13 @@ public class Game2048 extends Game {
     }
 
     private void createGame() {
+
         createNewNumber();
         createNewNumber();
     }
 
     private void createNewNumber() {
+        if(getMaxTileValue()>=2048) win();
         int rndX = getRandomNumber(SIDE);
         int rndY = getRandomNumber(SIDE);
         while (gameField[rndX][rndY] != 0) {
@@ -170,5 +173,20 @@ public class Game2048 extends Game {
             }
         }
         gameField = ret;
+    }
+
+    private int getMaxTileValue(){
+        int maxValue = 0;
+        for (int y = 0; y < SIDE; y++) {
+            for (int x = 0; x < SIDE; x++) {
+                maxValue = Math.max(maxValue, gameField[y][x]);
+            }
+        }
+        return maxValue;
+    }
+
+    private void win(){
+        isGameStopped = true;
+        showMessageDialog(Color.GREEN, "You Win!!!", Color.WHITE, 75);
     }
 }
