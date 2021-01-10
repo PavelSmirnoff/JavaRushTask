@@ -149,4 +149,14 @@ public class Game2048 extends Game {
     private void moveDown() {
 
     }
+
+    private void rotateClockwise(){
+        int[][] ret = new int[SIDE][SIDE];
+        for (int r = 0; r < SIDE; r++) {
+            for (int c = 0; c < SIDE; c++) {
+                ret[c][SIDE-1-r] = gameField[r][c];
+            }
+        }
+        gameField = ret;
+    }
 }
