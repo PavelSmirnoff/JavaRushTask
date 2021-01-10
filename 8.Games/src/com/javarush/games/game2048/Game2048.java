@@ -105,20 +105,36 @@ public class Game2048 extends Game {
         switch (key) {
             case LEFT:
                 moveLeft();
+                drawScene();
                 break;
             case RIGHT:
                 moveRight();
+                drawScene();
                 break;
             case UP:
                 moveUp();
+                drawScene();
                 break;
             case DOWN:
                 moveDown();
+                drawScene();
                 break;
         }
     }
 
     private void moveLeft() {
+        boolean addNumbers = false;
+        for (int[] row : gameField) {
+            boolean shiftRow = compressRow(row);
+            boolean mergedRow = mergeRow(row);
+            if (mergedRow) shiftRow = compressRow(row);
+            if (shiftRow || mergedRow) {
+                addNumbers = true;
+            }
+        }
+        if (addNumbers) {
+            createNewNumber();
+        }
 
     }
 
