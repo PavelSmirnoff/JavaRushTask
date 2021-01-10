@@ -189,4 +189,19 @@ public class Game2048 extends Game {
         isGameStopped = true;
         showMessageDialog(Color.GREEN, "You Win!!!", Color.WHITE, 75);
     }
+
+    private boolean canUserMove(){
+        for (int y = 0; y < SIDE; y++) {
+            for (int x = 0; x < SIDE; x++) {
+                if (gameField[y][x] == 0) {
+                    return true;
+                } else if (y < SIDE - 1 && gameField[y][x] == gameField[y + 1][x]) {
+                    return true;
+                } else if ((x < SIDE - 1) && gameField[y][x] == gameField[y][x + 1]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
