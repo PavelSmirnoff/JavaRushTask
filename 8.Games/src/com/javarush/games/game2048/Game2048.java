@@ -15,13 +15,13 @@ public class Game2048 extends Game {
     }
 
     private void createGame() {
-
+        gameField = new int[SIDE][SIDE];
         createNewNumber();
         createNewNumber();
     }
 
     private void createNewNumber() {
-        if(getMaxTileValue()>=2048) win();
+        if (getMaxTileValue() >= 2048) win();
         int rndX = getRandomNumber(SIDE);
         int rndY = getRandomNumber(SIDE);
         while (gameField[rndX][rndY] != 0) {
@@ -105,7 +105,16 @@ public class Game2048 extends Game {
 
     @Override
     public void onKeyPress(Key key) {
-        if(!canUserMove()){
+        if (isGameStopped) {
+            if (key == Key.SPACE) {
+                isGameStopped = false;
+                createGame();
+                drawScene();
+            } else {
+                return;
+            }
+        }
+        if (!canUserMove()) {
             gameOver();
             return;
         }
@@ -127,6 +136,7 @@ public class Game2048 extends Game {
                 drawScene();
                 break;
         }
+
     }
 
     private void moveLeft() {
@@ -169,17 +179,17 @@ public class Game2048 extends Game {
         rotateClockwise();
     }
 
-    private void rotateClockwise(){
+    private void rotateClockwise() {
         int[][] ret = new int[SIDE][SIDE];
         for (int r = 0; r < SIDE; r++) {
             for (int c = 0; c < SIDE; c++) {
-                ret[c][SIDE-1-r] = gameField[r][c];
+                ret[c][SIDE - 1 - r] = gameField[r][c];
             }
         }
         gameField = ret;
     }
 
-    private int getMaxTileValue(){
+    private int getMaxTileValue() {
         int maxValue = 0;
         for (int y = 0; y < SIDE; y++) {
             for (int x = 0; x < SIDE; x++) {
@@ -189,18 +199,18 @@ public class Game2048 extends Game {
         return maxValue;
     }
 
-    private void win(){
+    private void win() {
         isGameStopped = true;
         showMessageDialog(Color.GREEN, "You Win!!!", Color.WHITE, 75);
     }
 
-    private void gameOver(){
+    private void gameOver() {
         isGameStopped = true;
         showMessageDialog(Color.RED, "You Lose!!!", Color.WHITE, 75);
     }
 
 
-    private boolean canUserMove(){
+    private boolean canUserMove() {
         for (int y = 0; y < SIDE; y++) {
             for (int x = 0; x < SIDE; x++) {
                 if (gameField[y][x] == 0) {
