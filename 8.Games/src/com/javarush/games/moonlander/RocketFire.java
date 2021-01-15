@@ -32,4 +32,11 @@ public class RocketFire extends GameObject {
         matrix = frames.get(frameIndex);
 
     }
+
+    public void show(){
+        isVisible = true;
+    }
+    public void hide(){
+        isVisible = false;
+    }
 }
