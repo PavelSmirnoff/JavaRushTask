@@ -1,5 +1,7 @@
 package com.javarush.games.racer;
 
+import com.javarush.games.racer.road.*;
+
 public class PlayerCar extends GameObject {
 
     private static int playerCarHeight = ShapeMatrix.PLAYER.length;
@@ -24,6 +26,8 @@ public class PlayerCar extends GameObject {
         } else if (direction == Direction.RIGHT) {
             x++;
         }
+        if (x < RoadManager.LEFT_BORDER) x = RoadManager.LEFT_BORDER;
+        if (x > RoadManager.RIGHT_BORDER - width) x = RoadManager.RIGHT_BORDER - width;
     }
 
 }
