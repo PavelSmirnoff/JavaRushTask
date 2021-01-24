@@ -1,7 +1,6 @@
 package com.javarush.task.task17.task1721;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
