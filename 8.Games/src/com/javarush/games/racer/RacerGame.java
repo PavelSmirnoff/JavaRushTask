@@ -11,6 +11,7 @@ public class RacerGame extends Game {
     private RoadMarking roadMarking;
     private PlayerCar player;
     private RoadManager roadManager;
+    private boolean isGameStopped;
 
     @Override
     public void initialize() {
@@ -20,6 +21,7 @@ public class RacerGame extends Game {
     }
 
     private void createGame() {
+        isGameStopped = false;
         setTurnTimer(40);
         roadMarking = new RoadMarking();
         player = new PlayerCar();
@@ -36,7 +38,7 @@ public class RacerGame extends Game {
 
     @Override
     public void setCellColor(int x, int y, Color color) {
-        if (x<0||x>=WIDTH||y<0||y>=HEIGHT) return;
+        if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) return;
         super.setCellColor(x, y, color);
     }
 
@@ -46,7 +48,7 @@ public class RacerGame extends Game {
             for (int y = 0; y < HEIGHT; y++) {
                 if (x == CENTER_X) {
                     color = Color.WHITE;
-                }else if (x >= ROADSIDE_WIDTH && x < (WIDTH - ROADSIDE_WIDTH)) {
+                } else if (x >= ROADSIDE_WIDTH && x < (WIDTH - ROADSIDE_WIDTH)) {
                     color = Color.DARKGRAY;
                 } else {
                     color = Color.GREEN;
@@ -58,28 +60,45 @@ public class RacerGame extends Game {
 
     @Override
     public void onTurn(int step) {
+        if (roadManager.checkCrush(player)) {
+            gameOver();
+            drawScene();
+            return;
+        }
+        roadManager.generateNewRoadObjects(this);
         moveAll();
         drawScene();
     }
 
     @Override
     public void onKeyReleased(Key key) {
-        if ( key == Key.LEFT && player.getDirection() == Direction.LEFT)player.setDirection(Direction.NONE);
-        if ( key == Key.RIGHT && player.getDirection() == Direction.RIGHT)player.setDirection(Direction.NONE);
+        if (key == Key.LEFT && player.getDirection() == Direction.LEFT) player.setDirection(Direction.NONE);
+        if (key == Key.RIGHT && player.getDirection() == Direction.RIGHT) player.setDirection(Direction.NONE);
 
     }
 
     @Override
     public void onKeyPress(Key key) {
-        switch (key){
-            case RIGHT: player.setDirection(Direction.RIGHT); break;
-            case LEFT: player.setDirection(Direction.LEFT); break;
+        switch (key) {
+            case RIGHT:
+                player.setDirection(Direction.RIGHT);
+                break;
+            case LEFT:
+                player.setDirection(Direction.LEFT);
+                break;
         }
     }
 
-    private void moveAll(){
+    private void moveAll() {
         roadMarking.move(player.speed);
+        roadManager.move(player.speed);
         player.move();
     }
 
+    private void gameOver() {
+        isGameStopped = true;
+        showMessageDialog(Color.RED, "Looser", Color.WHITE, 100);
+        stopTurnTimer();
+        player.stop();
+    }
 }
