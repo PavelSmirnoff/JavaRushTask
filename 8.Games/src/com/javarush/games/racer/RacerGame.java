@@ -74,17 +74,23 @@ public class RacerGame extends Game {
     public void onKeyReleased(Key key) {
         if (key == Key.LEFT && player.getDirection() == Direction.LEFT) player.setDirection(Direction.NONE);
         if (key == Key.RIGHT && player.getDirection() == Direction.RIGHT) player.setDirection(Direction.NONE);
-
+        if (key == Key.UP) player.speed = 1;
     }
 
     @Override
     public void onKeyPress(Key key) {
         switch (key) {
+            case SPACE:
+                if(isGameStopped) createGame();
+                break;
             case RIGHT:
                 player.setDirection(Direction.RIGHT);
                 break;
             case LEFT:
                 player.setDirection(Direction.LEFT);
+                break;
+            case UP:
+                player.speed = 2;
                 break;
         }
     }
