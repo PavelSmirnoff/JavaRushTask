@@ -14,7 +14,11 @@ public class RoadManager {
     private static final int FOURTH_LANE_POSITION = 44;
     private List<RoadObject> items = new ArrayList<>();
     private static final int PLAYER_CAR_DISTANCE = 12;
+    private int passedCarsCount = 0;
 
+    public int getPassedCarsCount() {
+        return passedCarsCount;
+    }
 
     private RoadObject createRoadObject(RoadObjectType type, int x, int y) {
         if (type == RoadObjectType.THORN) return new Thorn(x, y);
@@ -78,7 +82,11 @@ public class RoadManager {
         Iterator<RoadObject> iterator = items.iterator();
         RoadObject r;
         while (iterator.hasNext()) {
-            if (iterator.next().y >= RacerGame.HEIGHT) iterator.remove();
+            RoadObject object = iterator.next();
+            if (object.y >= RacerGame.HEIGHT) {
+                if(object.type != RoadObjectType.THORN) passedCarsCount++;
+                iterator.remove();
+            }
         }
     }
 
