@@ -1,37 +1,60 @@
 package com.javarush.task.task20.task2025;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /* 
 Алгоритмы-числа
 */
 
 public class Solution {
+    public static long[][] pows;
 
     public static long[] getNumbers(long N) {
-        if (N <= 1) return new long[0];
+        if (N <= 0) return new long[0];
 
-        List<Long> list = new ArrayList<>();
-        for (long i = 1; i <= N; i++) {
-            int lenght = String.valueOf(i).length()+1;
-            //System.out.println(leight);
-            //if (leight > 20) break;
-            //long[] arrayN = new long[leight];
-            long number = i;
-            long pows = 0;
-            long sum = 0;
-            for (int ii = 0; ii < lenght; ii++) {
-                pows = (long) Math.pow(number % 10, lenght);
+        int length = String.valueOf(N).length();
+        if (length > 20) return new long[0];
 
-                if ((sum += pows) > i) break;
-                number = number / 10;
-            }
-            //System.out.println(i + " " + x);
-            if (i == sum) list.add(i);
+        genPows(length);
+        int[] num = new int[length + 1];
+        Set<Long> set = new TreeSet<>();
+
+        for (long n = 1L; n <= N; n++) {
+            set.add(sorting(n));
         }
-        return list.stream().mapToLong(l -> l).toArray();
+
+        System.out.println(set);
+
+//        for(long n=1L; n <=N ; n++){
+//            int length = String.valueOf(n).length();
+//            long sum = 0;
+//            long num = n;
+//            while (num > 0){
+//                sum += Math.pow(num%10,length);
+//                num /= 10;
+//                if (sum > n) break;
+//            }
+//            if (sum == n) numbers.add(n);
+//        }
+
+
+        return null;
+    }
+
+    public static long sorting(long n) {
+
+        return n;
+    }
+
+    public static void genPows(int length) {
+        pows = new long[10][length + 1];
+        for (int n = 0; n < 10; n++) {
+            for (int l = 0; l < length; l++) {
+                pows[n][l] = (long) Math.pow(n, l);
+            }
+        }
     }
 
     public static void main(String[] args) {
