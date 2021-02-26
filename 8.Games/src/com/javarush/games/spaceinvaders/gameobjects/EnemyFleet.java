@@ -5,6 +5,7 @@ import com.javarush.games.spaceinvaders.ShapeMatrix;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 /**
  * @author pavelsmirnov
@@ -32,5 +33,13 @@ public class EnemyFleet {
         for (EnemyShip eShip: ships) {
             eShip.draw(game);
         }
+    }
+
+    private double getLeftBorder(){
+        return ships.stream().flatMapToDouble(num -> DoubleStream.of(num.x)).min().getAsDouble();
+    }
+
+    private double getRightBorder(){
+        return ships.stream().flatMapToDouble(num -> DoubleStream.of(num.x+ num.width)).max().getAsDouble();
     }
 }
