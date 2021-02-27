@@ -12,6 +12,11 @@ public class EnemyShip extends Ship{
         super.setStaticView(ShapeMatrix.ENEMY);
     }
 
+    @Override
+    public Bullet fire() {
+        return new Bullet(x + 1, y + height, Direction.DOWN);
+    }
+
     public void move(Direction direction, double speed){
         if(direction.equals(Direction.RIGHT)){
             x += speed;
