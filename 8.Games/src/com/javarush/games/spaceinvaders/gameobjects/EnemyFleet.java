@@ -64,8 +64,16 @@ public class EnemyFleet {
             directionChange = true;
         }
         double speed = getSpeed();
-        for (EnemyShip e: ships) {
-            e.move((directionChange)?Direction.DOWN:direction,speed);
+        for (EnemyShip e : ships) {
+            e.move((directionChange) ? Direction.DOWN : direction, speed);
         }
+    }
+
+    public Bullet fire(Game game) {
+        if (ships.isEmpty()) return null;
+        int rnd = game.getRandomNumber(100 / SpaceInvadersGame.COMPLEXITY);
+        if (rnd > 0) return null;
+
+        return ships.get(game.getRandomNumber(ships.size())).fire();
     }
 }
