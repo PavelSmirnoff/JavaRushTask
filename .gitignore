@@ -1,4 +1,4 @@
-﻿git#############
+﻿#############
 ## Idea
 #############
 target/
@@ -6,6 +6,7 @@ target/
 .idea
 .repository/
 .DS_Store
+out/
 
 #*.iml
 #*.iws
