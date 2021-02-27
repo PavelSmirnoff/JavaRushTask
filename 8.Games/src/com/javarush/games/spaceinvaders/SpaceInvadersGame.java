@@ -56,6 +56,11 @@ public class SpaceInvadersGame extends Game {
 
     @Override
     public void onTurn(int step) {
+        moveSpaceObjects();
         drawScene();
+    }
+
+    private void moveSpaceObjects(){
+        enemyFleet.move();
     }
 }

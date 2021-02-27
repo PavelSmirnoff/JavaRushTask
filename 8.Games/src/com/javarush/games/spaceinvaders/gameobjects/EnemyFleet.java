@@ -1,6 +1,7 @@
 package com.javarush.games.spaceinvaders.gameobjects;
 
 import com.javarush.engine.cell.Game;
+import com.javarush.games.spaceinvaders.Direction;
 import com.javarush.games.spaceinvaders.ShapeMatrix;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.stream.DoubleStream;
 public class EnemyFleet {
     private final static int ROWS_COUNT = 3;
     private final static int COLUMNS_COUNT = 10;
+    private Direction direction = Direction.RIGHT;
     private final static int STEP = ShapeMatrix.ENEMY.length + 1;
     private List<EnemyShip> ships;
 
@@ -41,5 +43,15 @@ public class EnemyFleet {
 
     private double getRightBorder(){
         return ships.stream().flatMapToDouble(num -> DoubleStream.of(num.x+ num.width)).max().getAsDouble();
+    }
+
+    private double getSpeed(){
+        int count = ships.size();
+        double speed = 3.0 / count;
+        return Math.min(speed, 2.0);
+    }
+
+    public void move(){
+
     }
 }
