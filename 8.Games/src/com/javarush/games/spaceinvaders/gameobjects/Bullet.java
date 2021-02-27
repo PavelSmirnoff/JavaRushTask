@@ -1,0 +1,22 @@
+package com.javarush.games.spaceinvaders.gameobjects;
+
+import com.javarush.games.spaceinvaders.Direction;
+import com.javarush.games.spaceinvaders.ShapeMatrix;
+
+/**
+ * @author pavelsmirnov
+ */
+public class Bullet extends GameObject{
+    private int dy;
+    public boolean isAlive = true;
+
+    public Bullet(double x, double y, Direction direction) {
+        super(x, y);
+        setMatrix(ShapeMatrix.BULLET);
+        dy = (direction.equals(Direction.UP))?-1:1;
+    }
+
+    public void move(){
+        y += dy;
+    }
+}
