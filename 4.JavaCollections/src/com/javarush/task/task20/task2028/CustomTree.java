@@ -2,6 +2,7 @@ package com.javarush.task.task20.task2028;
 
 import java.io.Serializable;
 import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,6 +11,12 @@ import java.util.List;
 */
 
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable{
+    Entry<String> root;
+    private ArrayList<Entry<String>> entryArrayList;
+
+    public CustomTree() {
+        this.root = new Entry<>(null);
+    }
 
     @Override
     public String get(int index) {
@@ -18,7 +25,15 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public int size() {
-        return 0;
+        return entryArrayList.size();
+    }
+
+    public boolean add(String s){
+
+        return false;
+    }
+    public String getParent(String s) {
+        return "";
     }
 
     public String set(int index, String element){
@@ -39,6 +54,8 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     public boolean addAll(int index, Collection<? extends String> c){
         throw new UnsupportedOperationException();
     }
+
+
 
     static class Entry<T> implements Serializable{
         String elementName;
