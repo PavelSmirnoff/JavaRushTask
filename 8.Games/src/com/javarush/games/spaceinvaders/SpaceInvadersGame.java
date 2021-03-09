@@ -1,13 +1,12 @@
 package com.javarush.games.spaceinvaders;
 
-import com.javarush.engine.cell.Color;
-import com.javarush.engine.cell.Game;
+import com.javarush.engine.cell.*;
 import com.javarush.games.spaceinvaders.gameobjects.Bullet;
 import com.javarush.games.spaceinvaders.gameobjects.EnemyFleet;
+import com.javarush.games.spaceinvaders.gameobjects.PlayerShip;
 import com.javarush.games.spaceinvaders.gameobjects.Star;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -20,6 +19,7 @@ public class SpaceInvadersGame extends Game {
     private List<Star> stars;
     private EnemyFleet enemyFleet;
     private List<Bullet> enemyBullets;
+    private PlayerShip playerShip;
 
     @Override
     public void initialize() {
@@ -33,6 +33,7 @@ public class SpaceInvadersGame extends Game {
         createStars();
         enemyFleet = new EnemyFleet();
         enemyBullets = new ArrayList<>();
+        playerShip = new PlayerShip();
         drawScene();
     }
 
@@ -40,6 +41,7 @@ public class SpaceInvadersGame extends Game {
         drawField();
         enemyBullets.forEach(x -> x.draw(this));
         enemyFleet.draw(this);
+        playerShip.draw(this);
     }
 
     private void drawField() {
@@ -81,6 +83,7 @@ public class SpaceInvadersGame extends Game {
     }
 
     private void check(){
+        playerShip.verifyHit(enemyBullets);
         removeDeadBullets();
     }
 
