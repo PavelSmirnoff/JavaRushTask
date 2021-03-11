@@ -17,11 +17,21 @@ public class PlayerShip extends Ship {
 
     }
 
+    @Override
+    public void kill() {
+        if (!isAlive) return;
+        isAlive = false;
+        setAnimatedView(ShapeMatrix.KILL_PLAYER_ANIMATION_FIRST,
+                ShapeMatrix.KILL_PLAYER_ANIMATION_SECOND,
+                ShapeMatrix.KILL_PLAYER_ANIMATION_THIRD,
+                ShapeMatrix.DEAD_PLAYER);
+    }
+
     public void verifyHit(List<Bullet> bullets) {
         if (bullets.isEmpty()) return;
         if (this.isAlive) {
             bullets.forEach(bullet -> {
-                if (bullet.isAlive&&this.isAlive)
+                if (bullet.isAlive && this.isAlive)
                     if (this.isCollision(bullet)) {
                         this.kill();
                         bullet.kill();
