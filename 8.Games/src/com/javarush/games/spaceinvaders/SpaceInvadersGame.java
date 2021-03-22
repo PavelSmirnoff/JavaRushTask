@@ -1,6 +1,7 @@
 package com.javarush.games.spaceinvaders;
 
-import com.javarush.engine.cell.*;
+import com.javarush.engine.cell.Color;
+import com.javarush.engine.cell.Game;
 import com.javarush.games.spaceinvaders.gameobjects.Bullet;
 import com.javarush.games.spaceinvaders.gameobjects.EnemyFleet;
 import com.javarush.games.spaceinvaders.gameobjects.PlayerShip;
@@ -20,6 +21,9 @@ public class SpaceInvadersGame extends Game {
     private EnemyFleet enemyFleet;
     private List<Bullet> enemyBullets;
     private PlayerShip playerShip;
+    private boolean isGameStopped;
+    private int animationsCount;
+
 
     @Override
     public void initialize() {
@@ -34,6 +38,8 @@ public class SpaceInvadersGame extends Game {
         enemyFleet = new EnemyFleet();
         enemyBullets = new ArrayList<>();
         playerShip = new PlayerShip();
+        isGameStopped = false;
+        animationsCount = 0;
         drawScene();
     }
 
@@ -50,15 +56,15 @@ public class SpaceInvadersGame extends Game {
                 setCellValueEx(x, y, Color.GREY, "");
             }
         }
-        for(Star star: stars){
+        for (Star star : stars) {
             star.draw(this);
         }
     }
 
-    private void createStars(){
+    private void createStars() {
         stars = new ArrayList<>();
-        for(int i=0; i<8; i++){
-            stars.add(new Star(getRandomNumber(WIDTH),getRandomNumber(HEIGHT)));
+        for (int i = 0; i < 8; i++) {
+            stars.add(new Star(getRandomNumber(WIDTH), getRandomNumber(HEIGHT)));
         }
     }
 
@@ -72,19 +78,31 @@ public class SpaceInvadersGame extends Game {
         drawScene();
     }
 
-    private void moveSpaceObjects(){
+    private void moveSpaceObjects() {
         enemyFleet.move();
         enemyBullets.forEach(Bullet::move);
 
     }
 
-    private void removeDeadBullets(){
+    private void removeDeadBullets() {
         enemyBullets.removeIf(bullet -> !bullet.isAlive || bullet.y >= (HEIGHT - 1));
     }
 
-    private void check(){
+    private void check() {
         playerShip.verifyHit(enemyBullets);
         removeDeadBullets();
+        if(!playerShip.isAlive) stopGameWithDelay();
     }
 
+    private void stopGame(boolean isWin) {
+        isGameStopped = true;
+        stopTurnTimer();
+        if (isWin) showMessageDialog(Color.WHITE, "Is Win", Color.GREEN, 75);
+        else showMessageDialog(Color.WHITE, "Is NOT Win", Color.RED, 75);
+    }
+
+    private void stopGameWithDelay() {
+        animationsCount++;
+        if (animationsCount >= 10) stopGame(playerShip.isAlive);
+    }
 }
