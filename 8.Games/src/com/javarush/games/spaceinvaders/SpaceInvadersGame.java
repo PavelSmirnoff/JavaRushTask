@@ -2,6 +2,7 @@ package com.javarush.games.spaceinvaders;
 
 import com.javarush.engine.cell.Color;
 import com.javarush.engine.cell.Game;
+import com.javarush.engine.cell.Key;
 import com.javarush.games.spaceinvaders.gameobjects.Bullet;
 import com.javarush.games.spaceinvaders.gameobjects.EnemyFleet;
 import com.javarush.games.spaceinvaders.gameobjects.PlayerShip;
@@ -92,6 +93,16 @@ public class SpaceInvadersGame extends Game {
         playerShip.verifyHit(enemyBullets);
         removeDeadBullets();
         if(!playerShip.isAlive) stopGameWithDelay();
+    }
+
+    @Override
+    public void onKeyPress(Key key) {
+        if(key == Key.SPACE && isGameStopped) {
+            createGame();
+            return;
+        }
+        if(key == Key.LEFT) playerShip.setDirection(Direction.LEFT);
+        if(key == Key.RIGHT) playerShip.setDirection(Direction.RIGHT);
     }
 
     private void stopGame(boolean isWin) {
