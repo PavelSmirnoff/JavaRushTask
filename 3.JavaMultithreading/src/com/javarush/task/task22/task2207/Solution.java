@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,52 +19,33 @@ import java.util.List;
 public class Solution {
     public static List<Pair> result = new LinkedList<>();
 
-    public static void main(String[] args) throws IOException {
-        //File file = new File("/Users/pavelsmirnov/Documents/Development/JavaRush/JavaRushTasks/3.JavaMultithreading/src/com/javarush/task/task22/task2207/test_file.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+    public static void main(String[] args) throws Exception {
+        List<String> words = new ArrayList<>();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader fileReader = new BufferedReader(new FileReader(bufferedReader.readLine()));
+        bufferedReader.close();
+        while (fileReader.ready()) {
+            words.addAll(Arrays.asList(fileReader.readLine().split(" ")));
+        }
+        fileReader.close();
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] words = line.split(" ");
-
-                for (int i = 0; i < words.length; i++) {
-                    //System.out.println(words[i]);
-                    Pair pair = new Pair();
-                    if (result.size() > 0) {
-                        for (Pair p : result) {
-//                            System.out.println(p.first + " - " + words[i]);
-                            if (p.first.equals(words[i])) {
-                                pair.first = null;
-                                pair.second = null;
-                                if (p.first.equals(new StringBuilder(words[i]).reverse().toString())) {
-                                    p.second = words[i];
-                                }
-                                break;
-                            }
-                            if (p.first.equals(new StringBuilder(words[i]).reverse().toString())) {
-                                p.second = words[i];
-                                break;
-                            }
-
-                            pair.first = words[i];
-                            pair.second = null;
-                        }
-//                        System.out.println(pair.first + " <> " + pair.second);
-                    } else {
-                        pair.first = words[i];
-                        pair.second = null;
-                    }
-
-                    if (pair.second == null && pair.first != null)
-                        result.add(pair);
+        for (int i = 0; i < words.size(); i++) {
+            for (int j = 0; j < words.size(); ) {
+                if (i >= words.size()) {
+                    break;
                 }
+                if (words.get(j).equals(new StringBuilder(words.get(i)).reverse().toString()) && j != i) {
+                    Pair pair = new Pair();
+                    pair.first = words.get(j);
+                    pair.second = words.get(i);
+                    result.add(pair);
+                    words.remove(j);
+                    words.remove(i);
+                    j = 0;
+                } else
+                    j++;
             }
         }
-
-//        System.out.println(result.toString());
-        result.removeIf(next -> next.second == null);
-
-        //System.out.println(result.toString());
     }
 
     public static class Pair {
