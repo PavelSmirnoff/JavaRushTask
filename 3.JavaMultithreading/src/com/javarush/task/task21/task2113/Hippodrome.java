@@ -34,6 +34,8 @@ public class Hippodrome {
         game = new Hippodrome(horses);
 
         game.run();
+
+        game.printWinner();
     }
 
     public void move() {
@@ -46,7 +48,6 @@ public class Hippodrome {
             print();
             Thread.sleep(200);
         }
-        printWinner();
     }
 
     public void print() {
