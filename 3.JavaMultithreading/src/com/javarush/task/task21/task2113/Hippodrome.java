@@ -32,4 +32,16 @@ public class Hippodrome {
 
         game = new Hippodrome(horses);
     }
+
+    public void move(){
+
+    }
+
+    public  void run(){
+
+    }
+
+    public void print(){
+
+    }
 }
