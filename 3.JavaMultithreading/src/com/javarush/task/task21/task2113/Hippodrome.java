@@ -26,22 +26,26 @@ public class Hippodrome {
 
     public static void main(String[] args) {
         List<Horse> horses = new ArrayList<>();
-        horses.add(new Horse("Рыжик",3,0));
-        horses.add(new Horse("Русак",3,0));
-        horses.add(new Horse("Кобыла",3,0));
+        horses.add(new Horse("Рыжик", 3, 0));
+        horses.add(new Horse("Русак", 3, 0));
+        horses.add(new Horse("Кобыла", 3, 0));
 
         game = new Hippodrome(horses);
     }
 
-    public void move(){
+    public void move() {
 
     }
 
-    public  void run(){
-
+    public void run() throws InterruptedException {
+        for (int i = 0; i < 100; i++) {
+            move();
+            print();
+            Thread.sleep(200);
+        }
     }
 
-    public void print(){
+    public void print() {
 
     }
 }
