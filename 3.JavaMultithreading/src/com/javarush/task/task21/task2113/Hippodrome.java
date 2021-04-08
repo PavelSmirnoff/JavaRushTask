@@ -24,20 +24,19 @@ public class Hippodrome {
         return horses;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         List<Horse> horses = new ArrayList<>();
         horses.add(new Horse("Рыжик", 3, 0));
         horses.add(new Horse("Русак", 3, 0));
         horses.add(new Horse("Кобыла", 3, 0));
 
         game = new Hippodrome(horses);
+
+        game.run();
     }
 
     public void move() {
-        for (Horse horse : getHorses()) {
-            horse.move();
-        }
-
+        getHorses().forEach(Horse::move);
     }
 
     public void run() throws InterruptedException {
