@@ -47,6 +47,10 @@ public class Horse {
     }
 
     public void print() {
-
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < (int) getDistance(); i++) {
+            str.append(".");
+        }
+        System.out.println(str + getName());
     }
 }
