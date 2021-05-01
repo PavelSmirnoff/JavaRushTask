@@ -16,7 +16,6 @@ public class ModelData {
         this.displayDeletedUserList = displayDeletedUserList;
     }
 
-
     public User getActiveUser() {
         return activeUser;
     }
@@ -32,5 +31,6 @@ public class ModelData {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
 
 }

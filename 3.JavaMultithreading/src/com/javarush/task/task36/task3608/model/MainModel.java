@@ -34,6 +34,15 @@ public class MainModel implements Model {
         modelData.setUsers(getAllUsers());
     }
 
+    @Override
+    public void changeUserData(String name, long id, int level) {
+//        User user = userService.getUsersById(id);
+//        user.setName(name);
+//        user.setLevel(level);
+        userService.createOrUpdateUser(name,id,level);
+        modelData.setUsers(getAllUsers());
+    }
+
     public void loadUserById(long userId) {
         modelData.setActiveUser(userService.getUsersById(userId));
     }
