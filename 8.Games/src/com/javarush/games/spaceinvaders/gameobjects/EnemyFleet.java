@@ -93,4 +93,13 @@ public class EnemyFleet {
     public void deleteHiddenShips(){
         ships.removeIf(x -> !x.isVisible());
     }
+
+    public double getBottomBorder(){
+        if(ships.size()==0) return 0.0;
+        return ships.stream().flatMapToDouble(s -> DoubleStream.of(s.y + s.height)).max().getAsDouble();
+    }
+
+    public int getShipsCount(){
+        return ships.size();
+    }
 }

@@ -66,4 +66,8 @@ public class PlayerShip extends Ship {
         if (x < 0) x = 0;
         if ((x + width) > SpaceInvadersGame.WIDTH) x = SpaceInvadersGame.WIDTH - width;
     }
+
+    public void win(){
+        setStaticView(ShapeMatrix.WIN_PLAYER);
+    }
 }
