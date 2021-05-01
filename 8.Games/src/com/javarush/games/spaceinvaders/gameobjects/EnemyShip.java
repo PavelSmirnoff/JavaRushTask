@@ -3,10 +3,14 @@ package com.javarush.games.spaceinvaders.gameobjects;
 import com.javarush.games.spaceinvaders.Direction;
 import com.javarush.games.spaceinvaders.ShapeMatrix;
 
+import java.util.List;
+
 /**
  * @author pavelsmirnov
  */
 public class EnemyShip extends Ship{
+    public int score = 15;
+
     public EnemyShip(double x, double y) {
         super(x, y);
         super.setStaticView(ShapeMatrix.ENEMY);
@@ -38,4 +42,6 @@ public class EnemyShip extends Ship{
             y += 2;
         }
     }
+
+
 }
