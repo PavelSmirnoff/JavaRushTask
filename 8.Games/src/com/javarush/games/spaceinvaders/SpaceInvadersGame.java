@@ -92,17 +92,25 @@ public class SpaceInvadersGame extends Game {
     private void check() {
         playerShip.verifyHit(enemyBullets);
         removeDeadBullets();
-        if(!playerShip.isAlive) stopGameWithDelay();
+        if (!playerShip.isAlive) stopGameWithDelay();
     }
 
     @Override
     public void onKeyPress(Key key) {
-        if(key == Key.SPACE && isGameStopped) {
+        if (key == Key.SPACE && isGameStopped) {
             createGame();
             return;
         }
-        if(key == Key.LEFT) playerShip.setDirection(Direction.LEFT);
-        if(key == Key.RIGHT) playerShip.setDirection(Direction.RIGHT);
+        if (key == Key.LEFT) playerShip.setDirection(Direction.LEFT);
+        if (key == Key.RIGHT) playerShip.setDirection(Direction.RIGHT);
+    }
+
+    @Override
+    public void onKeyReleased(Key key) {
+        if ((key == Key.LEFT && playerShip.getDirection() == Direction.LEFT)||
+                (key == Key.RIGHT && playerShip.getDirection() == Direction.RIGHT)){
+            playerShip.setDirection(Direction.UP);
+        }
     }
 
     private void stopGame(boolean isWin) {

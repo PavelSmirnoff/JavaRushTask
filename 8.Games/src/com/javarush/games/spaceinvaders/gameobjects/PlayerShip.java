@@ -13,13 +13,16 @@ import java.util.List;
  */
 public class PlayerShip extends Ship {
 
-
     private Direction direction = Direction.UP;
 
     public PlayerShip() {
         super(SpaceInvadersGame.WIDTH / 2.0, SpaceInvadersGame.HEIGHT - ShapeMatrix.PLAYER.length - 1);
         setStaticView(ShapeMatrix.PLAYER);
 
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public void setDirection(Direction direction) {
