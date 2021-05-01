@@ -14,6 +14,7 @@ public class Ship extends GameObject{
     private int frameIndex;
     public boolean isAlive = true;
 
+
     public Ship(double x, double y) {
         super(x, y);
     }
@@ -50,5 +51,10 @@ public class Ship extends GameObject{
     public void draw(Game game) {
         super.draw(game);
         nextFrame();
+    }
+
+    public boolean isVisible(){
+        if(!isAlive &&  frameIndex >= frames.size() ) return false;
+        return true;
     }
 }

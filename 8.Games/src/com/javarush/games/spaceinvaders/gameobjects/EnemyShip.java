@@ -17,6 +17,15 @@ public class EnemyShip extends Ship{
         return new Bullet(x + 1, y + height, Direction.DOWN);
     }
 
+    @Override
+    public void kill() {
+        if(!isAlive) return;
+        isAlive = false;
+        super.setAnimatedView(ShapeMatrix.KILL_ENEMY_ANIMATION_FIRST,
+                ShapeMatrix.KILL_ENEMY_ANIMATION_SECOND,
+                ShapeMatrix.KILL_ENEMY_ANIMATION_THIRD);
+    }
+
     public void move(Direction direction, double speed){
         if(direction.equals(Direction.RIGHT)){
             x += speed;
