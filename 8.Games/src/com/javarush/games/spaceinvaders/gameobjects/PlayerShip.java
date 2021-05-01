@@ -30,6 +30,12 @@ public class PlayerShip extends Ship {
     }
 
     @Override
+    public Bullet fire() {
+        if (!this.isAlive) return null;
+        return new Bullet(x + 2, y - ShapeMatrix.BULLET.length, Direction.UP);
+    }
+
+    @Override
     public void kill() {
         if (!isAlive) return;
         isAlive = false;
