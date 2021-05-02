@@ -1,11 +1,17 @@
 package com.javarush.task.task24.task2413;
 
-/**
- * This write description created class
- *
- * @author pavelsmirnov
- * @version 0.1
- * Created 02.05.2021
- */
-public class Ball {
+public class Ball extends BaseObject{
+    @Override
+    void draw(Canvas canvas) {
+
+    }
+
+    @Override
+    void move() {
+
+    }
+
+    public Ball(double x, double y, double radius) {
+        super(x, y, radius);
+    }
 }
