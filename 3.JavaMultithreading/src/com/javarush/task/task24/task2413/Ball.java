@@ -41,12 +41,17 @@ public class Ball extends BaseObject{
 
     @Override
     void draw(Canvas canvas) {
-
+        canvas.setPoint(x,y,'O');
     }
 
     @Override
     void move() {
-
+        if(isFrozen) return;
+        x+=dx;
+        y+=dy;
+    }
+    void start(){
+        isFrozen = false;
     }
 
     public Ball(double x, double y, double speed, double direction) {
