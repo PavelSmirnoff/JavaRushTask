@@ -49,4 +49,19 @@ public class Canvas {
             }
         }
     }
+
+    void clear(){
+        matrix = new char[height + 2][width + 2];
+    }
+
+    void print(){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(" ");
+                System.out.print(matrix[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
 }
