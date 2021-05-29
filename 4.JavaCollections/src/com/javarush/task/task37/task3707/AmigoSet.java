@@ -8,15 +8,14 @@ import java.util.stream.Stream;
 
 public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneable, Set<E> {
     private static final Object PRESENT = new Object();
-    private transient HashMap<E, Object> map;
+    private transient HashMap<E,Object> map;
 
-    public AmigoSet() {
+    public AmigoSet(){
         map = new HashMap<>();
     }
-
     public AmigoSet(Collection<? extends E> collection) {
-        map = new HashMap<>(Math.max(16, (int) (collection.size() / .75f + 1)));
-        collection.forEach(x -> map.put(x, PRESENT));
+        map = new HashMap<>(Math.max(16,(int)(collection.size()/.75f+1)));
+        collection.forEach(x -> map.put(x,PRESENT));
     }
 
     @Override
@@ -40,8 +39,8 @@ public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneab
     }
 
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<E> iterator() {
+        return map.keySet().iterator();
     }
 
     @Override
@@ -60,9 +59,21 @@ public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneab
     }
 
     @Override
-    public int size() {
-        return 0;
+    public boolean isEmpty(){
+        return map.isEmpty();
     }
+
+    @Override
+    public void clear(){
+        map.clear();
+    }
+
+    @Override
+    public int size() {
+        return map.size();
+    }
+
+
 
     @Override
     public void forEach(Consumer action) {
