@@ -7,6 +7,18 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneable, Set<E> {
+    private static final Object PRESENT = new Object();
+    private transient HashMap<E, Object> map;
+
+    public AmigoSet() {
+        map = new HashMap<>();
+    }
+
+    public AmigoSet(Collection<? extends E> collection) {
+        map = new HashMap<>(Math.max(16, (int) (collection.size() / .75f + 1)));
+        collection.forEach(x -> map.put(x, PRESENT));
+    }
+
     @Override
     public Spliterator spliterator() {
         return Set.super.spliterator();
@@ -33,8 +45,8 @@ public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneab
     }
 
     @Override
-    public boolean add(Object o) {
-        return false;
+    public boolean add(E e) {
+        return map.put(e, PRESENT) == null;
     }
 
     @Override
