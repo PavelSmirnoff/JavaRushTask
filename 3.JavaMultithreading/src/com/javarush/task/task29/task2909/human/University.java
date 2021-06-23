@@ -3,7 +3,7 @@ package com.javarush.task.task29.task2909.human;
 import java.util.ArrayList;
 import java.util.List;
 
-public class University{
+public class University {
     private int age;
     private String name;
     private List<Student> students = new ArrayList<>();
@@ -38,22 +38,42 @@ public class University{
     }
 
 
-
 //    public University(String name, int age) {
 //        super(name, age, 0);
 //    }
 
-    public Student getStudentWithAverageGrade() {
+    public Student getStudentWithAverageGrade(double value) {
         //TODO:
-        return null;
+        return students.stream().filter(x -> x.getAverageGrade() == value).findFirst().get();
     }
 
-    public Student getStudentWithMaxAverageGrade(double averageGrade) {
+    public Student getStudentWithMaxAverageGrade() {
         //TODO:
-        return null;
+        double max = Double.MIN_VALUE;
+        Student s = null;
+        for (Student student : students) {
+            if (student.getAverageGrade() > max) {
+                max = student.getAverageGrade();
+                s = student;
+            }
+        }
+        return s;
     }
 
-    public void getStudentWithMinAverageGradeAndExpel() {
+    public Student getStudentWithMinAverageGrade() {
         //TODO:
+        double min = Double.MAX_VALUE;
+        Student s = null;
+        for (Student student : students) {
+            if (student.getAverageGrade() < min) {
+                min = student.getAverageGrade();
+                s = student;
+            }
+        }
+        return s;
+    }
+
+    public void expel(Student student) {
+        students.remove(student);
     }
 }
