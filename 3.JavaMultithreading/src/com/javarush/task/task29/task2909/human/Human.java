@@ -7,14 +7,12 @@ import java.util.List;
 public class Human implements Alive {
     private List<Human> children = new ArrayList<>();
 
-    public static int nextId = 0;
+    private static int nextId = 0;
     private int id;
     protected int age;
     protected String name;
 
     protected int[] size;
-
-//    protected boolean isSoldier;
 
     public static final int FIRST = 1;
     public static final int SECOND = 2;
@@ -31,7 +29,6 @@ public class Human implements Alive {
     }
 
     public Human(String name, int age) {
-//        this.isSoldier = isSoldier;
         this.name = name;
         this.age = age;
     }
@@ -40,9 +37,6 @@ public class Human implements Alive {
         return Collections.unmodifiableList(children);
     }
 
-    //    public void setChildren(List<Human> children) {
-//        this.children = children;
-//    }
     public void addChild(Human human) {
         children.add(human);
     }
@@ -50,7 +44,6 @@ public class Human implements Alive {
     public void removeChild(Human human) {
         children.remove(human);
     }
-
 
     public int getAge() {
         return age;
@@ -68,19 +61,11 @@ public class Human implements Alive {
         this.name = name;
     }
 
-
-
     public void live() {
-//        if (isSoldier)
-//            fight();
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void printSize() {
