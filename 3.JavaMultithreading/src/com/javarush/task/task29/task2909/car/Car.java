@@ -2,10 +2,13 @@ package com.javarush.task.task29.task2909.car;
 
 import java.util.Date;
 
-public class Car {
+abstract public class Car {
     static public final int TRUCK = 0;
     static public final int SEDAN = 1;
     static public final int CABRIOLET = 2;
+    public final int MAX_TRUCK_SPEED = 80;
+    public final int MAX_SEDAN_SPEED = 120;
+    public final int MAX_CABRIOLET_SPEED = 90;
 
     double fuel;
 
@@ -18,11 +21,11 @@ public class Car {
     private boolean driverAvailable;
     private int numberOfPassengers;
 
-    protected Car (int type, int numberOfPassengers){
+    protected Car(int type, int numberOfPassengers) {
 
     }
 
-    protected Car( int numberOfPassengers) {
+    protected Car(int numberOfPassengers) {
         this.numberOfPassengers = numberOfPassengers;
     }
 
@@ -48,28 +51,29 @@ public class Car {
         fuel += numberOfLiters;
     }
 
-    public boolean isSummer(Date date, Date summerStart, Date summerEnd){
+    public boolean isSummer(Date date, Date summerStart, Date summerEnd) {
         return date.after(summerStart) && date.before(summerEnd);
     }
 
-    public double getWinterConsumption(int length){
+    public double getWinterConsumption(int length) {
         return length * winterFuelConsumption + winterWarmingUp;
     }
-    public double getSummerConsumption(int length){
+
+    public double getSummerConsumption(int length) {
         return length * summerFuelConsumption;
     }
 
     public double getTripConsumption(Date date, int length, Date SummerStart, Date SummerEnd) {
-        return !isSummer(date,SummerStart, SummerEnd)?getWinterConsumption(length):getSummerConsumption(length);
+        return !isSummer(date, SummerStart, SummerEnd) ? getWinterConsumption(length) : getSummerConsumption(length);
+    }
+
+    private boolean canPassengersBeTransferred() {
+        return isDriverAvailable() && fuel > 0;
     }
 
     public int getNumberOfPassengersCanBeTransferred() {
-        if (!isDriverAvailable())
-            return 0;
-        if (fuel <= 0)
-            return 0;
-
-        return numberOfPassengers;
+        if (canPassengersBeTransferred()) return numberOfPassengers;
+        return 0;
     }
 
     public boolean isDriverAvailable() {
@@ -83,10 +87,8 @@ public class Car {
     public void startMoving() {
         if (numberOfPassengers > 0) {
             fastenPassengersBelts();
-            fastenDriverBelt();
-        } else {
-            fastenDriverBelt();
         }
+        fastenDriverBelt();
     }
 
     public void fastenPassengersBelts() {
@@ -95,11 +97,5 @@ public class Car {
     public void fastenDriverBelt() {
     }
 
-    public int getMaxSpeed() {
-        if (type == TRUCK)
-            return 80;
-        if (type == SEDAN)
-            return 120;
-        return 90;
-    }
+    public abstract int getMaxSpeed();
 }
