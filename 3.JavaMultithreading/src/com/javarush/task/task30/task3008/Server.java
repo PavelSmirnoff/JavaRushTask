@@ -34,7 +34,7 @@ public class Server {
             while (true) {
                 connection.send(new Message(MessageType.NAME_REQUEST));
                 Message message = connection.receive();
-                if(message.getType()==MessageType.USER_NAME) {
+                if (message.getType() == MessageType.USER_NAME) {
                     name = message.getData();
                     if (!name.equals("") && name != null && !connectionMap.containsKey(name)) break;
                 }
@@ -42,6 +42,18 @@ public class Server {
             connectionMap.put(name, connection);
             connection.send(new Message(MessageType.NAME_ACCEPTED));
             return name;
+        }
+
+        private void notifyUsers(Connection connection, String userName) throws IOException {
+            connectionMap.forEach((name, conn) -> {
+                if(!name.equals(userName)){
+                    try {
+                        connection.send(new Message(MessageType.USER_ADDED,name));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 
