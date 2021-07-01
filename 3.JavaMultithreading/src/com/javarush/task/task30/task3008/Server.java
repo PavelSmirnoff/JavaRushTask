@@ -28,6 +28,21 @@ public class Server {
         Handler(Socket socket) {
             this.socket = socket;
         }
+
+        private String serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
+            String name = null;
+            while (true) {
+                connection.send(new Message(MessageType.NAME_REQUEST));
+                Message message = connection.receive();
+                if(message.getType()==MessageType.USER_NAME) {
+                    name = message.getData();
+                    if (!name.equals("") && name != null && !connectionMap.containsKey(name)) break;
+                }
+            }
+            connectionMap.put(name, connection);
+            connection.send(new Message(MessageType.NAME_ACCEPTED));
+            return name;
+        }
     }
 
     public static void sendBroadcastMessage(Message message) {
