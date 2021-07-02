@@ -30,6 +30,60 @@ public class Client {
                 Client.this.notify();
             }
         }
+
+        protected void clientHandshake() throws IOException, ClassNotFoundException{
+            while (true){
+                Message msg = connection.receive();
+
+//                switch (msg.getType()){
+//                    case NAME_REQUEST:
+//                        connection.send(new Message(MessageType.USER_NAME,getUserName())); break;
+//                    case NAME_ACCEPTED:
+//                        notifyConnectionStatusChanged(true); return;
+//                    default: throw new IOException("Unexpected MessageType");
+//                }
+                if (msg.getType() == MessageType.NAME_REQUEST) { // Сервер запросил имя пользователя
+                    // Запрашиваем ввод имени с консоли
+                    String name = getUserName();
+                    // Отправляем имя на сервер
+                    connection.send(new Message(MessageType.USER_NAME, getUserName()));
+                } else if (msg.getType() == MessageType.NAME_ACCEPTED) { // Сервер принял имя пользователя
+                    // Сообщаем главному потоку, что он может продолжить работу
+                    notifyConnectionStatusChanged(true);
+                    return;
+                } else {
+                    throw new IOException("Unexpected MessageType");
+                }
+            }
+        }
+
+        protected void clientMainLoop() throws IOException, ClassNotFoundException{
+            while (true) {
+                Message msg = connection.receive();
+//                switch (msg.getType()) {
+//                    case TEXT:
+//                        processIncomingMessage(msg.getData());
+//                        break;
+//                    case USER_ADDED:
+//                        informAboutAddingNewUser(msg.getData());
+//                        break;
+//                    case USER_REMOVED:
+//                        informAboutDeletingNewUser(msg.getData());
+//                        break;
+//                    default:
+//                        throw new IOException("Unexpected MessageType");
+//                }
+                if (msg.getType() == MessageType.TEXT) { // Сервер прислал сообщение с текстом
+                    processIncomingMessage(msg.getData());
+                } else if (MessageType.USER_ADDED == msg.getType()) {
+                    informAboutAddingNewUser(msg.getData());
+                } else if (MessageType.USER_REMOVED == msg.getType()) {
+                    informAboutDeletingNewUser(msg.getData());
+                } else {
+                    throw new IOException("Unexpected MessageType");
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
