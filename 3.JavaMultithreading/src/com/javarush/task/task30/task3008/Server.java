@@ -60,11 +60,27 @@ public class Server {
             while (true) {
                 Message message = connection.receive();
                 if (message.getType() == MessageType.TEXT) {
-                    sendBroadcastMessage(new Message(MessageType.TEXT,userName + ": " + message.getData()));
+                    sendBroadcastMessage(new Message(MessageType.TEXT, userName + ": " + message.getData()));
                 } else {
                     ConsoleHelper.writeMessage("Получено сообщение от " + socket.getRemoteSocketAddress() + ". Тип сообщения не соответствует протоколу.");
                 }
             }
+        }
+
+        @Override
+        public void run() {
+            ConsoleHelper.writeMessage("Соединение адресом " + socket.getRemoteSocketAddress() + " установлено.");
+            try (Connection connection = new Connection(socket)) {
+                String name = serverHandshake(connection);
+                notifyUsers(connection, name);
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED, name));
+                serverMainLoop(connection, name);
+                connectionMap.remove(name);
+                sendBroadcastMessage(new Message(MessageType.USER_REMOVED, name));
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
