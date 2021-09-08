@@ -2,7 +2,6 @@ package com.javarush.task.task20.task2025;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /* 
@@ -12,8 +11,24 @@ import java.util.List;
 public class Solution {
 
     public static long[] getNumbers(long N) {
-        long[] result = null;
-        return result;
+        List<Long> list = new ArrayList<>();
+        for (int i = 1; i <= N; i++) {
+            List<Integer> num = new ArrayList<>();
+            int ii = i;
+            while (ii >= 10) {
+                num.add(ii % 10);
+                ii = ii / 10;
+            }
+            num.add(ii % 10);
+
+            long sum = 0L;
+            for (Integer nn : num) {
+                sum += Math.pow(nn, num.size());
+                if (sum > i) break;
+            }
+            if (sum == i) list.add(sum);
+        }
+        return list.stream().mapToLong(Math::toIntExact).toArray();
     }
 
     public static void main(String[] args) {
