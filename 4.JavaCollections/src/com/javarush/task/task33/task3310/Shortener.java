@@ -11,15 +11,15 @@ public class Shortener {
     }
 
     public synchronized Long getId(String string) {
-        Long id = storageStrategy.getKey(string);
-        if (id != null) return id;
+        if (storageStrategy.containsValue(string))
+            return storageStrategy.getKey(string);
 
         lastId++;
         storageStrategy.put(lastId, string);
         return lastId;
     }
 
-    public String getString(Long id) {
+    public synchronized String getString(Long id) {
         return storageStrategy.getValue(id);
     }
 }
